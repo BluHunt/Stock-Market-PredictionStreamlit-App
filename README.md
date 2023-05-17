@@ -9,5 +9,3 @@ Model used : LSTM (Long short-term memory)
 
 ##
 
-
- <img src="images/qrcode.png" alt="qrcode" width="175" height="175" />
