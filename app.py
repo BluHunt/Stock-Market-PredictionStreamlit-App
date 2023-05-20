@@ -65,8 +65,10 @@ train_data = scaled_df[0:, :]
 x_train = []
 y_train = []
 
-for i in range(60, len(train_data)):
-    x_train.append(train_data[i-60:i, 0])
+duration = 90
+
+for i in range(duration, len(train_data)):
+    x_train.append(train_data[i-duration:i, 0])
     y_train.append(train_data[i, 0])
 
 x_train, y_train = np.array(x_train), np.array(y_train)
@@ -79,13 +81,13 @@ model.add(Dense(25))
 model.add(Dense(1))
 
 model.compile(optimizer='adam', loss='mean_squared_error')
-model.fit(x_train, y_train, batch_size=1, epochs=1)
+model.fit(x_train, y_train, batch_size=1, epochs=2)
 
-test_data = scaled_df[-60:, :].tolist()
+test_data = scaled_df[-duration:, :].tolist()
 x_test = []
 y_test = []
-for i in range(60, 70):
-    x_test = (test_data[i-60:i])
+for i in range(duration, duration+10):
+    x_test = (test_data[i-duration:i])
     x_test = np.asarray(x_test)
     pred_data = model.predict(x_test.reshape(1, x_test.shape[0], 1).tolist())
 
@@ -95,8 +97,14 @@ for i in range(60, 70):
 
 pred_next_10 = scaler.inverse_transform(np.asarray(y_test).reshape(-1, 1))
 
+# Evaluate model accuracy
+train_loss = model.evaluate(x_train, y_train, verbose=0)
+model_accuracy = 1 - train_loss
+
 data_load_state.text('Loading Model... done!')
 
+st.subheader("Model Accuracy")
+st.write("Accuracy:", model_accuracy)
 
 st.subheader("Next 10 Days")
 st.write(pred_next_10)
