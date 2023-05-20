@@ -15,7 +15,7 @@ import plotly.graph_objects as go
 
 st.title('Stock Forecast App')
 
-stocks = ("BHARTIARTL.NS", "ICICIBANK.NS", "TATASTEEL.NS")
+stocks = ("BHARTIARTL.NS", "ICICIBANK.NS", "TATASTEEL.NS","AAPL", "GOOGL", "MSFT","BTC-USD", "ETH-USD", "LTC-USD")
 selected_stock = st.selectbox("Select Stocks for prediction", stocks)
 
 
